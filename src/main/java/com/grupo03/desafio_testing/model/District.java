@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -14,7 +13,6 @@ import java.util.UUID;
 @Builder
 public class District {
 
-    private UUID id = UUID.randomUUID();
     private String districtName;
     private BigDecimal valueDistrictM2;
 }
