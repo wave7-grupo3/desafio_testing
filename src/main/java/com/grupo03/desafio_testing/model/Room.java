@@ -18,14 +18,16 @@ public class Room {
     @Size(max = 30, message = "The length of room name cannot exceed 30 characters.")
     private String roomName;
 
-    @NotNull
+    @NotNull(message = "The room width cannot be null." )
     @Min(value = 1, message = "The minimum width is 1.0 meter.")
     @Max(value = 25, message = "The maximum width per room is 25 meters.")
     private Double roomWidth;
 
-    @NotNull
+    @NotNull(message = "The room length cannot be null." )
     @Min(value = 1, message = "The minimum length is 1.0 meter.")
     @Max(value = 33, message = "The maximum length per room is 33 meters.")
     private Double roomLength;
+
+    private Double totalRoomArea;
 
 }
