@@ -14,7 +14,12 @@ public class PropertyService implements IProperty {
     private PropertyRepository propertyRepository;
 
     @Override
-    public List<Property> createProperty(Property property) {
+    public Property createProperty(Property property) {
         return propertyRepository.createProperty(property);
+    }
+
+    @Override
+    public List<Property> getAll() {
+        return propertyRepository.getAll();
     }
 }
