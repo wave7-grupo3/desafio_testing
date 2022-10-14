@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Repository
@@ -66,5 +68,18 @@ public class PropertyRepository {
         return districts.stream()
                 .filter(dist -> dist.getDistrictName().equals(district.getDistrictName()))
                 .collect(Collectors.toList());
+    }
+
+    public Room getBiggestRoom(String id) {
+        Room room = getAll().stream()
+                .filter(prop -> prop.getId().toString().equals(id))
+                .collect(Collectors.toList())
+                .get(0)
+                .getRooms()
+                .stream().max(Comparator.comparing(Room::getTotalRoomArea)).get();
+
+//                .map(proper -> proper.getRooms())
+//                .max(Comparator.comparing(Room::getTotalRoomArea));
+        return room;
     }
 }
