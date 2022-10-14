@@ -1,6 +1,7 @@
 package com.grupo03.desafio_testing.controllers;
 
 import com.grupo03.desafio_testing.model.Property;
+import com.grupo03.desafio_testing.model.Room;
 import com.grupo03.desafio_testing.services.IProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,11 @@ public class PropertyController {
     @GetMapping()
     public ResponseEntity<List<Property>> getAll() {
         return new ResponseEntity<>(propertyService.getAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/room/{id}")
+    public ResponseEntity<Room> getBiggestRoom(@PathVariable String id) {
+        return new ResponseEntity<>(propertyService.getBiggestRoom(id), HttpStatus.OK);
     }
     
 }

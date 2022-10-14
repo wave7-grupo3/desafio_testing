@@ -1,6 +1,7 @@
 package com.grupo03.desafio_testing.services;
 
 import com.grupo03.desafio_testing.model.Property;
+import com.grupo03.desafio_testing.model.Room;
 import com.grupo03.desafio_testing.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,10 @@ public class PropertyService implements IProperty {
     @Override
     public List<Property> getAll() {
         return propertyRepository.getAll();
+    }
+
+    @Override
+    public Room getBiggestRoom(String id) {
+        return propertyRepository.getBiggestRoom(id);
     }
 }
