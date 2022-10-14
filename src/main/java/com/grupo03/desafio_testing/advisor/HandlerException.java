@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -34,5 +35,16 @@ public class HandlerException extends ResponseEntityExceptionHandler {
                 .build();
 
         return new ResponseEntity<>(errorDetail, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorDetails> handlerNotFoundException(NotFoundException ex) {
+        ErrorDetails errorDetails = ErrorDetails.builder()
+                .title("Not found!")
+                .message(ex.getMessage())
+                .status(HttpStatus.NOT_FOUND.value())
+                .timeStamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 }
