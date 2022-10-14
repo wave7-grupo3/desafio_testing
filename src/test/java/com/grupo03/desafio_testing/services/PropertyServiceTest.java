@@ -72,7 +72,6 @@ class PropertyServiceTest {
     void getBiggestRoom() {
     }
 }
-
 //        propertyResponse = propertyResponse.builder()
 //                .propName("Casa 08")
 //                .propDistrict(district)
