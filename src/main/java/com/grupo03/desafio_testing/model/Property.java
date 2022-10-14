@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,5 +35,7 @@ public class Property {
     private List<Room> rooms;
 
     private Double totalPropArea;
+
+    private BigDecimal totalPropPrice;
 
 }
