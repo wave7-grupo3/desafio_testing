@@ -16,6 +16,7 @@ public class PropertyRepository {
 
     public Property createProperty(Property property) {
         calculateTotalRoomArea(property);
+        calculateTotalPropArea(property);
         properties.add(property);
         return property;
     }
@@ -30,4 +31,10 @@ public class PropertyRepository {
                 });
     }
 
-}
+    private void calculateTotalPropArea(Property property) {
+        Double total = property.getRooms().stream()
+                .map(Room::getTotalRoomArea)
+                .reduce(0.0, Double::sum);
+        property.setTotalPropArea(total);
+    }
+};
