@@ -3,6 +3,7 @@ package com.grupo03.desafio_testing.advisor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -35,6 +36,18 @@ public class HandlerException extends ResponseEntityExceptionHandler {
                 .build();
 
         return new ResponseEntity<>(errorDetail, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        var errorDetail = ErrorDetails.builder()
+                .title("Validation Error")
+                .message("The type you enter must be a number.")
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timeStamp(LocalDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(errorDetail, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NotFoundException.class)
