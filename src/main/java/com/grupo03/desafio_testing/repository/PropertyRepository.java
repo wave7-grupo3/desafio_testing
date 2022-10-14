@@ -1,10 +1,12 @@
 package com.grupo03.desafio_testing.repository;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.grupo03.desafio_testing.model.Property;
 import com.grupo03.desafio_testing.model.Room;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class PropertyRepository {
     public Property createProperty(Property property) {
         calculateTotalRoomArea(property);
         calculateTotalPropArea(property);
+        calculateTotalPropPrice(property);
         properties.add(property);
         return property;
     }
@@ -26,9 +29,7 @@ public class PropertyRepository {
     }
 
     private void calculateTotalRoomArea(Property property) {
-       property.getRooms().forEach(room -> {
-                    room.setTotalRoomArea(room.getRoomWidth() * room.getRoomLength());
-                });
+       property.getRooms().forEach(room -> room.setTotalRoomArea(room.getRoomWidth() * room.getRoomLength()));
     }
 
     private void calculateTotalPropArea(Property property) {
@@ -37,4 +38,9 @@ public class PropertyRepository {
                 .reduce(0.0, Double::sum);
         property.setTotalPropArea(total);
     }
-};
+
+    private void calculateTotalPropPrice(Property property) {
+        BigDecimal totalPrice = BigDecimal.valueOf(property.getTotalPropArea()).multiply(property.getPropDistrict().getValueDistrictM2());
+        property.setTotalPropPrice(totalPrice);
+    }
+}
