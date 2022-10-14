@@ -8,6 +8,5 @@ import java.util.List;
 public interface IProperty {
     Property createProperty(Property property);
     List<Property> getAll();
-
     Room getBiggestRoom(String id);
 }
