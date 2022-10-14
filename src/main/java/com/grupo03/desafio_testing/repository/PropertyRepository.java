@@ -13,8 +13,12 @@ public class PropertyRepository {
 
     private final List<Property> properties = new ArrayList<>();
 
-    public List<Property> createProperty(Property property) {
+    public Property createProperty(Property property) {
         properties.add(property);
+        return property;
+    }
+
+    public List<Property> getAll() {
         return properties;
     }
 
