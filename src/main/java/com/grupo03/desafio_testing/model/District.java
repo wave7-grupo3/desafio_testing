@@ -19,7 +19,7 @@ public class District {
     private String districtName;
 
     @NotNull(message = "That the value of the square meter in the neighborhood cannot be empty.")
-    @DecimalMin(value = "1.0", inclusive = false, message = "The minimum value is 1.0.")
+    @DecimalMin(value = "1.0", message = "The minimum value is 1.0.")
     @Digits(integer = 11, fraction = 2)
     private BigDecimal valueDistrictM2;
 }
