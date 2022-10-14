@@ -33,4 +33,6 @@ public class Property {
     @Size(min = 1)
     private List<Room> rooms;
 
+    private Double totalPropArea;
+
 }
