@@ -29,6 +29,7 @@ Technologies
 - The challenge was carried out using Java 11 with Spring Boot, its validation annotations adding dependencies:
   - Spring Boot DevTools.
   - Spring Boot Web.
+  - Spring Boot Validation.
   - Lombok.
   - JUnit.
   - Mockito.
@@ -68,9 +69,9 @@ The Service layer was tested, with 100% line coverage, checking the methods for 
 
 
 ### API Documentation
-The tool chosen to document the API was Postman. This choice was due to the ease of sharing endpoint information in real time, since when updating the application locally, other team members receive this update instantly.
+The tool chosen to document the API was Postman and JavaDoc for the project.
 
-:warning: Access the documentation [here](https://documenter.getpostman.com/view/23644142/2s83ziPiu8).
+:warning: Access the documentation from Postman [here](https://documenter.getpostman.com/view/23653402/2s847ESZzK).
 
 
 ## How to access the project
@@ -82,6 +83,9 @@ Open the terminal and type the information in the sequence:
     - HTTPS: `git clone https://github.com/wave7-grupo3/desafio_testing.git`
 
 - Have the environment configured to view java projects.
+- Generate JavaDocs documentation:
+- On the top bar of the IntelliJ IDE, select the `Tools` tab;
+- Then select `generate JavaDoc`;
 
 
 ## Authors
@@ -119,6 +123,7 @@ Tecnologias
 - O desafio foi realizado utilizando Java 11 com Spring Boot, suas anotações de validação somando as dependências:
     - Spring Boot DevTools.
     - Spring Boot Web.
+    - Spring Boot Validation.
     - Lombok.
     - JUnit.
     - Mockito.
@@ -159,9 +164,9 @@ A camada de Service foi testada, com cobertura de 100% de linhas, verificando os
 
 
 ### Documentação da API
-A ferramenta escolhida para documentar a API foi o Postman. Esta escolha se deu pela facilidade em compartilhar as informações dos endpoints em tempo real, uma vez que ao atualizar a aplicação localmente, os demais membros da equipe recebem essa atualização instantaneamente.
+A ferramenta escolhida para documentar a API foi o Postman e JavaDoc para o projeto. 
 
-:warning: Acesse a documentação [aqui](https://documenter.getpostman.com/view/23644142/2s83ziPiu8).
+:warning: Acesse a documentação do Postman[aqui](https://documenter.getpostman.com/view/23653402/2s847ESZzK).
 
 
 ## Como acessar o projeto
@@ -173,6 +178,9 @@ Abrir o terminal e digitar as informações na sequência:
     - HTTPS: `git clone https://github.com/wave7-grupo3/desafio_testing.git`
 
 - Ter o ambiente configurado para vizualização de projetos java.
+- Gerar a documentação do JavaDocs:
+  - Na barra superior da IDE IntelliJ, selecionar a aba `Tools`;
+  - Em seguida, selecionar `generate JavaDoc`;
 
 
 ## Autores

@@ -17,6 +17,15 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class HandlerException extends ResponseEntityExceptionHandler {
 
+    /**
+     * Método responsável pelo tratamento das exceções geradas ao validar os campos de uma entidade.
+     * @author Grupo 03
+     * @param ex - MethodArgumentNotValidException
+     * @param headers - HttpHeaders
+     * @param status - HttpStatus
+     * @param request - WebRequest
+     * @return ErrorDetails - Retorna uma entidade do tipo ErrorDetails.
+     */
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<ValidationErrorDetail> errors = ex.getBindingResult().getFieldErrors().stream()
@@ -38,6 +47,15 @@ public class HandlerException extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorDetail, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
+    /**
+     * Método responsável pelo tratamento das exceções geradas ao validar o tipo de um campo.
+     * @author Grupo 03
+     * @param ex - HttpMessageNotReadableException
+     * @param headers - HttpHeaders
+     * @param status - HttpStatus
+     * @param request - WebRequest
+     * @return ErrorDetails - Retorna uma entidade do tipo ErrorDetails.
+     */
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         var errorDetail = ErrorDetails.builder()
@@ -50,6 +68,12 @@ public class HandlerException extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorDetail, HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Método responsável pelo tratamento das exceções geradas quando a solicitação não for encontrada.
+     * @author Grupo 03
+     * @param ex - NotFoundException
+     * @return ErrorDetails - Retorna uma entidade do tipo ErrorDetails.
+     */
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorDetails> handlerNotFoundException(NotFoundException ex) {
         ErrorDetails errorDetails = ErrorDetails.builder()

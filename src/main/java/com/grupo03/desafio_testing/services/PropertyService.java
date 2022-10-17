@@ -1,6 +1,5 @@
 package com.grupo03.desafio_testing.services;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.grupo03.desafio_testing.advisor.NotFoundException;
 import com.grupo03.desafio_testing.model.District;
 import com.grupo03.desafio_testing.model.Property;
