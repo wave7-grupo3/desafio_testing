@@ -31,6 +31,7 @@ class PropertyServiceTest {
 
     private Property propertyResponse;
     private District district;
+    private Room biggestRoom;
 
     private District districtNonExistent;
 
@@ -58,6 +59,10 @@ class PropertyServiceTest {
 
         propertyList.add(propertyResponse);
         districtList.add(district);
+
+        biggestRoom = new Room("Quarto", 10.0, 3.0, 30.0);
+
+
     }
 
     @Test
@@ -109,8 +114,6 @@ class PropertyServiceTest {
     @Test
     @DisplayName("Validates that it returns the largest room correctly.")
     void getBiggestRoom_returnSuccess_whenConsultedTheProperty() {
-        Room biggestRoom = new Room("Quarto", 10.0, 3.0, 30.0);
-
         Mockito.when(propertyRepository.getPropertyById(ArgumentMatchers.anyString()))
                 .thenReturn(propertyResponse);
 
@@ -129,7 +132,17 @@ class PropertyServiceTest {
 
        assertThat(totalPropPrice).isNotNull();
        assertThat(totalPropPrice).isNotNegative();
-       assertThat(totalPropPrice).isEqualTo(propertyResponse.getTotalPropPrice());
+       assertThat(totalPropPrice.setScale(1)).isEqualTo(propertyResponse.getTotalPropPrice());
+    }
+
+    @Test
+    @DisplayName("Validates that it returns the correct total room area.")
+    void calculateTotalRoomArea_returnSuccess_whenValueIsValid() {
+        Double totalRoomArea = propertyService.calculateTotalRoomArea(biggestRoom);
+
+        assertThat(totalRoomArea).isNotNull();
+        assertThat(totalRoomArea).isNotNegative();
+        assertThat(totalRoomArea).isEqualTo(biggestRoom.getTotalRoomArea());
     }
 
 }
