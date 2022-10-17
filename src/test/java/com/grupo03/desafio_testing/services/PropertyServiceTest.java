@@ -76,11 +76,13 @@ class PropertyServiceTest {
                 .thenReturn(districtList);
 
         Property property = propertyService.createProperty(propertyResponse);
+        property.getPropDistrict().setValueDistrictM2(BigDecimal.valueOf(6000));
 
         assertThat(property).isNotNull();
-        assertThat(property.getTotalPropArea()).isEqualTo(propertyResponse.getTotalPropArea());
         assertThat(property.getPropDistrict()).isEqualTo(propertyResponse.getPropDistrict());
         assertThat(property.getRooms()).isEqualTo(propertyResponse.getRooms());
+        assertThat(property.getPropDistrict().getValueDistrictM2()).isEqualTo(BigDecimal.valueOf(6000));
+        assertThat(property.getTotalPropArea()).isEqualTo(propertyResponse.getTotalPropArea());
         assertThat(property.getTotalPropPrice()).isEqualTo(propertyResponse.getTotalPropPrice());
     }
 
@@ -143,6 +145,16 @@ class PropertyServiceTest {
         assertThat(totalRoomArea).isNotNull();
         assertThat(totalRoomArea).isNotNegative();
         assertThat(totalRoomArea).isEqualTo(biggestRoom.getTotalRoomArea());
+    }
+
+    @Test
+    @DisplayName("Validates that it returns the correct total property area.")
+    void calculateTotalPropArea_returnSuccess_whenValueIsValid() {
+        Double totalPropArea = propertyService.calculateTotalPropArea(propertyResponse);
+
+        assertThat(totalPropArea).isNotNull();
+        assertThat(totalPropArea).isNotNegative();
+        assertThat(totalPropArea).isEqualTo(propertyResponse.getTotalPropArea());
     }
 
 }

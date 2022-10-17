@@ -32,7 +32,6 @@ public class PropertyService implements IProperty {
         } else {
             throw new NotFoundException("District not found!");
         }
-
         return propertyRepository.createProperty(property);
     }
 
