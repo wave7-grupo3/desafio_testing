@@ -28,19 +28,42 @@ public class PropertyRepository {
         districts.add(new District("São Paulo", BigDecimal.valueOf(10000)));
     }
 
+    /**
+     * Método responsável pela criação de uma propriedade.
+     * @author Grupo 03
+     * @param property - Property
+     * @return Property - Retorna uma entidade do tipo Property.
+     */
     public Property createProperty(Property property) {
             properties.add(property);
             return property;
     }
 
+    /**
+     * Método responsável por listar todas as propriedades.
+     * @author Grupo 03
+     * @return List<Property> - Retorna uma lista de Propriedades.
+     */
     public List<Property> getAll() {
         return properties;
     }
 
+    /**
+     * Método responsável por listar todos os distritos cadastrados na base de dados.
+     * @author Grupo 03
+     * @return List<District> - Retorna uma lista de distritos.
+     */
     public List<District> getAllDistricts() {
         return districts;
     }
 
+    /**
+     * Método responsável por retornar a propriedade filtrada pelo id.
+     * @author Grupo 03
+     * @param id - String
+     * @return Property - Retorna uma entidade do tipo Property.
+     * @throws NotFoundException
+     */
     public Property getPropertyById(String id) {
         Optional<Property> property= getAll().stream()
                 .filter(prop -> prop.getId().toString().equals(id))
