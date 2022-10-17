@@ -1,5 +1,6 @@
 package com.grupo03.desafio_testing.services;
 
+import com.grupo03.desafio_testing.advisor.NotFoundException;
 import com.grupo03.desafio_testing.model.District;
 import com.grupo03.desafio_testing.model.Property;
 import com.grupo03.desafio_testing.model.Room;
@@ -9,16 +10,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 class PropertyServiceTest {
@@ -32,6 +31,8 @@ class PropertyServiceTest {
     private Property propertyResponse;
     private District district;
     private List<Room> rooms = new ArrayList<>();
+
+    private List<Property> propertyList = new ArrayList<>();
 
     @BeforeEach
     void setup() {
@@ -47,6 +48,8 @@ class PropertyServiceTest {
                 68.0,
                 BigDecimal.valueOf(408000.0)
         );
+
+        propertyList.add(propertyResponse);
     }
 
     @Test
@@ -64,12 +67,50 @@ class PropertyServiceTest {
         assertThat(property.getTotalPropPrice()).isEqualTo(propertyResponse.getTotalPropPrice());
     }
 
+    // TODO
     @Test
-    void getAll() {
+    @DisplayName("Validates the creation of a new property when District not found.")
+    void createProperty_throwsNotFoundException_whenDistrictNotFound() throws NotFoundException {
+        BDDMockito.given(propertyRepository.createProperty(ArgumentMatchers.any()))
+                .willThrow(new NotFoundException("District not found!"));
+
+        assertThrows(NotFoundException.class, () -> {
+            propertyService.createProperty(propertyResponse);
+        });
+    }
+
+
+    @Test
+    @DisplayName("Validates if it returns the list of all registered properties.")
+    void getAll_returnSuccess_whenPropertiesListExists() {
+        Mockito.when(propertyRepository.getAll())
+                .thenReturn(propertyList);
+
+        List<Property> propertiesResponse = propertyService.getAll();
+
+        assertThat(propertiesResponse).isNotNull();
+        assertThat(propertiesResponse.get(0).getTotalPropArea()).isEqualTo(propertyResponse.getTotalPropArea());
+        assertThat(propertiesResponse.get(0).getRooms().get(0).getTotalRoomArea()).isEqualTo(propertyResponse.getRooms().get(0).getTotalRoomArea());
+        assertThat(propertiesResponse.get(0).getRooms().get(1).getTotalRoomArea()).isEqualTo(propertyResponse.getRooms().get(1).getTotalRoomArea());
+        assertThat(propertiesResponse.get(0).getRooms().get(2).getTotalRoomArea()).isEqualTo(propertyResponse.getRooms().get(2).getTotalRoomArea());
     }
 
     @Test
-    void getBiggestRoom() {
+    @DisplayName("Validates that it returns the largest room correctly.")
+    void getBiggestRoom_returnSuccess_whenConsultedTheProperty() {
+        Room biggestRoom = new Room("Quarto", 10.0, 3.0, 30.0);
+
+        Mockito.when(propertyRepository.getBiggestRoom(ArgumentMatchers.anyString()))
+                .thenReturn(biggestRoom);
+
+        Room roomResponse = propertyService.getBiggestRoom(String.valueOf(propertyResponse.getId()));
+
+        assertThat(roomResponse).isNotNull();
+        assertThat(roomResponse).isEqualTo(biggestRoom);
+        assertThat(roomResponse.getTotalRoomArea()).isEqualTo(biggestRoom.getTotalRoomArea());
+        assertThat(roomResponse.getRoomName()).isEqualTo(biggestRoom.getRoomName());
+
+
     }
 }
 //        propertyResponse = propertyResponse.builder()
