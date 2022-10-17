@@ -166,7 +166,7 @@ A camada de Service foi testada, com cobertura de 100% de linhas, verificando os
 ### Documentação da API
 A ferramenta escolhida para documentar a API foi o Postman e JavaDoc para o projeto. 
 
-:warning: Acesse a documentação do Postman[aqui](https://documenter.getpostman.com/view/23653402/2s847ESZzK).
+:warning: Acesse a documentação do Postman [aqui](https://documenter.getpostman.com/view/23653402/2s847ESZzK).
 
 
 ## Como acessar o projeto
