@@ -122,4 +122,14 @@ class PropertyServiceTest {
         assertThat(roomResponse.getRoomName()).isEqualTo(biggestRoom.getRoomName());
     }
 
+    @Test
+    @DisplayName("Validates that it returns the correct total price of the property.")
+    void calculateTotalPropPrice_returnSuccess_whenValueIsValid() {
+       BigDecimal totalPropPrice = propertyService.calculateTotalPropPrice(propertyResponse);
+
+       assertThat(totalPropPrice).isNotNull();
+       assertThat(totalPropPrice).isNotNegative();
+       assertThat(totalPropPrice).isEqualTo(propertyResponse.getTotalPropPrice());
+    }
+
 }
