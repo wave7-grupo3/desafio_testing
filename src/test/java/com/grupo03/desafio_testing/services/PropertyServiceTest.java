@@ -1,5 +1,6 @@
 package com.grupo03.desafio_testing.services;
 
+import com.grupo03.desafio_testing.advisor.NotFoundException;
 import com.grupo03.desafio_testing.model.District;
 import com.grupo03.desafio_testing.model.Property;
 import com.grupo03.desafio_testing.model.Room;
@@ -9,16 +10,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 class PropertyServiceTest {
@@ -63,6 +62,19 @@ class PropertyServiceTest {
         assertThat(property.getRooms()).isEqualTo(propertyResponse.getRooms());
         assertThat(property.getTotalPropPrice()).isEqualTo(propertyResponse.getTotalPropPrice());
     }
+
+    // TODO
+    @Test
+    @DisplayName("Validates the creation of a new property when District not found.")
+    void createProperty_throwsNotFoundException_whenDistrictNotFound() throws NotFoundException {
+        BDDMockito.given(propertyRepository.createProperty(ArgumentMatchers.any()))
+                .willThrow(new NotFoundException("District not found!"));
+
+        assertThrows(NotFoundException.class, () -> {
+            propertyService.createProperty(propertyResponse);
+        });
+    }
+
 
     @Test
     void getAll() {
