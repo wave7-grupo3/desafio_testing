@@ -14,9 +14,8 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,6 +29,8 @@ class PropertyServiceTest {
 
     private Property propertyResponse;
     private District district;
+
+    private List<District> districtList = new ArrayList<>();
     private List<Room> rooms = new ArrayList<>();
 
     private List<Property> propertyList = new ArrayList<>();
@@ -50,13 +51,18 @@ class PropertyServiceTest {
         );
 
         propertyList.add(propertyResponse);
+        districtList.add(district);
     }
 
     @Test
     @DisplayName("Validates the creation of a new property.")
     void createProperty_returnSuccess_whenValidData() {
+
         Mockito.when(propertyRepository.createProperty(ArgumentMatchers.any()))
                 .thenReturn(propertyResponse);
+
+        Mockito.when(propertyRepository.getAllDistricts())
+                .thenReturn(districtList);
 
         Property property = propertyService.createProperty(propertyResponse);
 
@@ -71,7 +77,16 @@ class PropertyServiceTest {
     @Test
     @DisplayName("Validates the creation of a new property when District not found.")
     void createProperty_throwsNotFoundException_whenDistrictNotFound() throws NotFoundException {
-        BDDMockito.given(propertyRepository.createProperty(ArgumentMatchers.any()))
+//        Mockito.when(propertyService.verifyDistrictExist(ArgumentMatchers.any()))
+//                .thenReturn(Collections.emptyList());
+
+        Mockito.when(propertyRepository.getAllDistricts())
+                .thenReturn(districtList);
+
+//        Mockito.when(propertyService.createProperty(ArgumentMatchers.any()))
+//                        .thenThrow(new NotFoundException("District not found!"));
+
+        BDDMockito.given(propertyService.createProperty(propertyResponse))
                 .willThrow(new NotFoundException("District not found!"));
 
         assertThrows(NotFoundException.class, () -> {
