@@ -15,4 +15,5 @@ public interface IProperty {
     Double calculateTotalPropArea(Property property);
     BigDecimal calculateTotalPropPrice(Property property);
     List<District> verifyDistrictExist(District district);
+    Room findBiggestRoom(List<Room> rooms);
 }
