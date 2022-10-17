@@ -44,7 +44,7 @@ public class PropertyService implements IProperty {
     @Override
     public Room getBiggestRoom(String id) {
         Property property = propertyRepository.getPropertyById(id);
-        return getBiggestRoom(property.getRooms());
+        return findBiggestRoom(property.getRooms());
     }
 
     @Override
@@ -73,8 +73,8 @@ public class PropertyService implements IProperty {
                 .collect(Collectors.toList());
     }
 
-
-    public Room getBiggestRoom(List<Room> rooms) {
+    @Override
+    public Room findBiggestRoom(List<Room> rooms) {
         return rooms.stream().max(Comparator.comparing(Room::getTotalRoomArea)).get();
     }
 }
