@@ -32,6 +32,8 @@ class PropertyServiceTest {
     private District district;
     private List<Room> rooms = new ArrayList<>();
 
+    private List<Property> propertyList = new ArrayList<>();
+
     @BeforeEach
     void setup() {
         district = new District("Curitiba", BigDecimal.valueOf(6000.0));
@@ -46,6 +48,8 @@ class PropertyServiceTest {
                 68.0,
                 BigDecimal.valueOf(408000.0)
         );
+
+        propertyList.add(propertyResponse);
     }
 
     @Test
@@ -77,7 +81,18 @@ class PropertyServiceTest {
 
 
     @Test
-    void getAll() {
+    @DisplayName("Validates if it returns the list of all registered properties")
+    void getAll_returnsSuccess_whenPropertiesListExists() {
+        Mockito.when(propertyRepository.getAll())
+                .thenReturn(propertyList);
+
+        List<Property> propertiesResponse = propertyService.getAll();
+
+        assertThat(propertiesResponse).isNotNull();
+        assertThat(propertiesResponse.get(0).getTotalPropArea()).isEqualTo(propertyResponse.getTotalPropArea());
+        assertThat(propertiesResponse.get(0).getRooms().get(0).getTotalRoomArea()).isEqualTo(propertyResponse.getRooms().get(0).getTotalRoomArea());
+        assertThat(propertiesResponse.get(0).getRooms().get(1).getTotalRoomArea()).isEqualTo(propertyResponse.getRooms().get(1).getTotalRoomArea());
+        assertThat(propertiesResponse.get(0).getRooms().get(2).getTotalRoomArea()).isEqualTo(propertyResponse.getRooms().get(2).getTotalRoomArea());
     }
 
     @Test
