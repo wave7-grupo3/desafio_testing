@@ -1,5 +1,6 @@
 package com.grupo03.desafio_testing.services;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.grupo03.desafio_testing.advisor.NotFoundException;
 import com.grupo03.desafio_testing.model.District;
 import com.grupo03.desafio_testing.model.Property;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,31 +43,38 @@ public class PropertyService implements IProperty {
 
     @Override
     public Room getBiggestRoom(String id) {
-
-        return propertyRepository.getBiggestRoom(id);
+        Property property = propertyRepository.getPropertyById(id);
+        return getBiggestRoom(property.getRooms());
     }
 
+    @Override
     public Double calculateTotalRoomArea(Room room) {
         return room.getRoomWidth() * room.getRoomLength();
     }
 
+    @Override
     public Double calculateTotalPropArea(Property property) {
-        Double total = property.getRooms().stream()
+        return property.getRooms().stream()
                 .map(Room::getTotalRoomArea)
                 .reduce(0.0, Double::sum);
-        return total;
     }
 
+    @Override
     public BigDecimal calculateTotalPropPrice(Property property) {
-        BigDecimal totalPrice = BigDecimal.valueOf(property.getTotalPropArea()).multiply(property.getPropDistrict().getValueDistrictM2());
-        return totalPrice;
+        return BigDecimal.valueOf(property.getTotalPropArea()).multiply(property.getPropDistrict().getValueDistrictM2());
     }
 
+    @Override
     public List<District> verifyDistrictExist(District district) {
         List<District> districts = propertyRepository.getAllDistricts();
 
         return districts.stream()
                 .filter(dist -> dist.getDistrictName().equals(district.getDistrictName()))
                 .collect(Collectors.toList());
+    }
+
+
+    public Room getBiggestRoom(List<Room> rooms) {
+        return rooms.stream().max(Comparator.comparing(Room::getTotalRoomArea)).get();
     }
 }

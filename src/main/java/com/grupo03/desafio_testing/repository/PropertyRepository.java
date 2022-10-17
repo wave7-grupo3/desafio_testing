@@ -6,12 +6,11 @@ import com.grupo03.desafio_testing.model.Property;
 import com.grupo03.desafio_testing.model.Room;
 import org.springframework.stereotype.Repository;
 
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -42,16 +41,11 @@ public class PropertyRepository {
         return districts;
     }
 
-    public Room getBiggestRoom(String id) {
-        Room room = getAll().stream()
+    public Property getPropertyById(String id) {
+        Optional<Property> property= getAll().stream()
                 .filter(prop -> prop.getId().toString().equals(id))
-                .collect(Collectors.toList())
-                .get(0)
-                .getRooms()
-                .stream().max(Comparator.comparing(Room::getTotalRoomArea)).get();
+                .collect(Collectors.toList()).stream().findFirst();
 
-//                .map(proper -> proper.getRooms())
-//                .max(Comparator.comparing(Room::getTotalRoomArea));
-        return room;
+        return property.orElseThrow(() -> new NotFoundException("Property not found!"));
     }
 }
